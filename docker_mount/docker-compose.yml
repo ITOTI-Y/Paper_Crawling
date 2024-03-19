@@ -1,0 +1,23 @@
+version: '3'
+services:
+  ubuntu_docker:
+    image: python:3.10
+    container_name: ubuntu_docker
+    environment:
+      - http_proxy=http://192.168.3.8:7890
+      - https_proxy=http://192.168.3.8:7890
+    volumes:
+      - F:\Directory\Python\Git\Paper Crawling\docker_mount:/home/docker_mount
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+      - "5002:5002"
+    command: >
+      bash -c  "apt-get update &&
+                apt-get upgrade &&
+                wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
+                dpkg -i google-chrome-stable_current_amd64.deb ||
+                apt-get install -f -y &&
+                tail -f /dev/null"
+    tty: true
+    stdin_open: true
